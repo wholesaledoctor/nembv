@@ -57,9 +57,13 @@ if (!cfg) {
   process.exit(1);
 }
 
+const pg = require('./playGround');
+
+
 mongoose.connect(cfg.db.url, (err) => {
   if (err) return console.error(err);
   console.log('mongoose connected');
+  pg.test.model();
 });
 
 module.exports = app;
