@@ -9,7 +9,7 @@ router.delete('/',ctrl.del);
 
 
 router.all('*',(req,res)=>{
-  res.status(404).send({success:false, mst `unknown uri ${req.path}`});
 });
+res.status(404).send({success:false, mst `unknown uri ${req.path}`});
 
 module.experts = router;

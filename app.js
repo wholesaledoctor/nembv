@@ -8,18 +8,23 @@ var logger = require('morgan');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
+const mongoose = require('mongoose');
+const cfg = require('./cfg/cfg');
+const pg = require('./playGround');
+
+if(!cfg) {
+  console.error('./cfg/cfg.js file not exists');
+  process.exit(1);
+}
+
 var app = express();
 
+if(cfg.web.cors) app.use(require('cors')());
 
 app.use(favicon(path.join(__dirname,'public','favicon.ico')));
-
-// view engine setup
-// app.set('views', path.join(__dirname, 'views'));
-// app.set('view engine', 'pug');
-
-
-
 app.use(logger('dev'));
+
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
@@ -48,16 +53,6 @@ app.use(function(err, req, res, next) {
   // res.render('error');
   res.send({success:false,msg:err.message});
 });
-
-const mongoose = require('mongoose');
-const cfg = require('./cfg/cfg');
-
-if (!cfg) {
-  console.error('./cfg/cfg.js file not exists');
-  process.exit(1);
-}
-
-const pg = require('./playGround');
 
 
 mongoose.connect(cfg.db.url, (err) => {

@@ -6,5 +6,6 @@ module.exports = {
     },
     web: {
       // 추후 http, https, port등
+      cors: true, //개발용
     }
 };
